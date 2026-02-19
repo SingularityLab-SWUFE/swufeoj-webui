@@ -1,81 +1,42 @@
-# SWUFE-OJ WebUI
+# SWUFE-OJ
 
-modern online judge platform to judge anything
-
-judge anything means you can use it as a Codeforce/Kaggle or any sort of leaderboard, ALL on a single platform.
+A general-purpose judging platform with pluggable judger, built for contests, benchmarking, and custom metric leaderboards.
 
 ## Features
 
-### Customizable local judgement
+### Pluggable Judger System
 
-A task can be judged by different metrics. In coding competitions, it can be time/memory/score based; in ML competitions, it can be R-squared/MAE/ACC based.
+Define what to evaluate and how. A Task specifies its submission format, test data, and judger — the platform handles the rest.
 
-SWUFE-OJ provides a flexible way to customize judgement logic. You need to specify:
+| Judger | Use Case |
+|---|---|
+| `StandardIOJudger` | Classic competitive programming (compile → run → diff) |
+| `SpecialJudger` | Problems with multiple valid answers (custom checker) |
+| `ScriptJudger` | Anything else — bring your own eval script |
 
-- a test set (labeled)
-- expected input/output format (e.g. code, model/API url for input; stdout, predictions csv for output)
-- a judge script.
+`ScriptJudger` allows you to judge anything: upload a eval script, and the platform runs it in a sandboxed Docker container against submissions. This makes it trivial to set up ML competitions (accuracy/F1), code golf (code length), performance benchmarks (QPS/latency), or any custom metric.
 
-The judge script is responsible for evaluating the submission on the test set and producing metrics. Built-in judger template includes:
+### Metric & Leaderboard
 
-| Judger Type    | Description                       |
-| -------------- | --------------------------------- |
-| Backend Judger | tests passed, performance metrics |
-| ML Judger      | ACC                               |
+Every judger outputs structured `MetricRecord`s. The platform stores, queries, and ranks them — regardless of whether the metric is time/memory, accuracy/RMSE, or QPS/p99.
 
-The test set is invisible to users (or you can choose to make it visible). The judge script is required written in Python.
+### Remote Judge
 
-### Remote judge
+Link problems from external platforms (Codeforces, Kaggle, etc.) with optional proxy submission — reuse existing problem sets without duplicating content.
 
-A problem can be created locally or linked to a problem provided by a remote platform. This enable you to reuse and integrate existing problems/tasks on other platforms.
+### Contest System
 
-To enable remote judge, you MUST configure the remote platform in your backend adapter, e.g. prepare bot accounts for submission. We also support forward submission to remote platforms (use it as a proxy).
+Full contest lifecycle: creation → registration → time-windowed submissions → live leaderboard → freeze → unfreeze.
 
-Supported remote platforms:
+## Tech Stack
 
-| Platform                                                                                           | Status |
-| -------------------------------------------------------------------------------------------------- | ------ |
-| ![Codeforce](https://codeforces.com/codeforces.org/s/53974/images/codeforces-sponsored-by-ton.png) | TODO   |
-| ![Kaggle](https://www.kaggle.com/favicon.ico)                                                      | TODO   |
-
-### Leaderboard
-
-You can create contest or problem set to organize problems (problems should be the same type). Each contest/problem set has a leaderboard to show user rankings. 
-
-Rankings are calculated based on problem metrics.
-
-### Problem submission
-
-An online text editor and a debug environment are provided for code submission. You can also upload code file for submission.
-
-### Discussion Forum
-
-Each problem has a discussion forum, where users can post questions, share solutions.
+- **Frontend**: Nuxt 4 + [Nuxt UI](https://www.figma.com/community/file/1544369209862884086/nuxt-ui-v4-official-design-kit-free)
+- **Backend**: REST API + PostgreSQL + RustFS + RabbitMQ + Redis
+- **Sandbox**: Docker (cgroup isolation, read-only mounts, network restrictions)
 
 ## Quick Start
 
-### Install Dependencies
-
 ```bash
 pnpm install
-```
-
-### Development
-
-Start the development server (default runs at `http://localhost:3000`):
-
-```bash
 pnpm dev -o
-```
-
-### Production Build
-
-```bash
-pnpm build
-```
-
-### Preview Production Build
-
-```bash
-pnpm preview
 ```
