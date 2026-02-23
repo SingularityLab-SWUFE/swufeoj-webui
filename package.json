@@ -27,10 +27,10 @@
     "vue-tsc": "^3.2.1"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "pnpm lint-staged --allow-empty && pnpm typecheck"
   },
   "lint-staged": {
-    "*.{js,ts,vue}": "eslint --fix"
+    "*.{js,ts,vue,json}": "eslint --fix"
   },
   "packageManager": "pnpm@10.26.1"
 }

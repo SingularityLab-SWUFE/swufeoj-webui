@@ -49,7 +49,7 @@
         <USelect
           :model-value="modelValue.type"
           :options="contestTypes"
-          @update:model-value="update('type', $event)"
+          @update:model-value="v => { if (v != null) update('type', v as string) }"
         />
       </div>
 
@@ -142,13 +142,13 @@ const emit = defineEmits<{
   'submit': []
 }>()
 
-const update = (key: keyof ContestFormData, value: ContestFormData[keyof ContestFormData]) => {
+const update = (key: keyof ContestFormData, value: string | number | ContestTask[]) => {
   emit('update:modelValue', { ...props.modelValue, [key]: value })
 }
 
-const updateTask = (index: number, key: keyof ContestTask, value: ContestTask[keyof ContestTask]) => {
+const updateTask = (index: number, key: keyof ContestTask, value: string | number) => {
   const tasks = [...props.modelValue.tasks]
-  tasks[index] = { ...tasks[index], [key]: value }
+  tasks[index] = { ...tasks[index], [key]: value } as ContestTask
   emit('update:modelValue', { ...props.modelValue, tasks })
 }
 

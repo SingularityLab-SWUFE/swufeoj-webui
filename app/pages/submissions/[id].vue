@@ -153,7 +153,7 @@
             </template>
 
             <Shiki
-              :lang="submission.language.toLowerCase()"
+              :lang="(submission.language.toLowerCase() as any)"
               :code="submission.code"
             />
           </UCard>
