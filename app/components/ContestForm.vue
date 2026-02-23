@@ -139,14 +139,14 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   'update:modelValue': [value: ContestFormData]
-  submit: []
+  'submit': []
 }>()
 
-const update = (key: keyof ContestFormData, value: any) => {
+const update = (key: keyof ContestFormData, value: ContestFormData[keyof ContestFormData]) => {
   emit('update:modelValue', { ...props.modelValue, [key]: value })
 }
 
-const updateTask = (index: number, key: keyof ContestTask, value: any) => {
+const updateTask = (index: number, key: keyof ContestTask, value: ContestTask[keyof ContestTask]) => {
   const tasks = [...props.modelValue.tasks]
   tasks[index] = { ...tasks[index], [key]: value }
   emit('update:modelValue', { ...props.modelValue, tasks })
