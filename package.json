@@ -21,8 +21,16 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.15.1",
     "eslint": "^9.39.2",
+    "lint-staged": "^16.2.7",
+    "simple-git-hooks": "^2.13.1",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.1"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": "eslint --fix"
   },
   "packageManager": "pnpm@10.26.1"
 }
