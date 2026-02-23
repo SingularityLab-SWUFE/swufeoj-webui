@@ -89,7 +89,9 @@
     "colUsername": "用户名",
     "colSolved": "通过数",
     "colSubmissions": "提交数",
-    "colJoined": "加入时间"
+    "colJoined": "加入时间",
+    "globalRank": "全局排名",
+    "recentSubmissions": "最近提交"
   },
   "profile": {
     "joined": "加入于 {date}",
@@ -274,7 +276,10 @@
     "rules": "规则",
     "rulesPlaceholder": "比赛规则",
     "submit": "创建比赛",
-    "cancel": "取消"
+    "cancel": "取消",
+    "editTitle": "编辑比赛",
+    "save": "保存修改",
+    "back": "返回比赛"
   },
   "taskCreate": {
     "back": "返回题目",

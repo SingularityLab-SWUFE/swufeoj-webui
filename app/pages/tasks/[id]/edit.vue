@@ -213,18 +213,14 @@ const taskTypes = computed(() => [
   { label: t('taskEdit.typeBackend'), value: 'backend' }
 ])
 
-const difficulties = computed(() => [
-  { label: t('status.difficulty.Easy'), value: 'easy' },
-  { label: t('status.difficulty.Medium'), value: 'medium' },
-  { label: t('status.difficulty.Hard'), value: 'hard' }
-])
+const { difficulties, addTestCase: addTC, removeTestCase: removeTC } = useTaskForm()
 
 const addTestCase = () => {
-  form.value.testCases.push({ input: '', output: '', isPublic: false })
+  addTC(form.value.testCases)
 }
 
 const removeTestCase = (index: number) => {
-  form.value.testCases.splice(index, 1)
+  removeTC(form.value.testCases, index)
 }
 
 const handleSave = async () => {

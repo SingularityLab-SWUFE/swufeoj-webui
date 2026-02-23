@@ -89,7 +89,9 @@
     "colUsername": "Username",
     "colSolved": "Solved",
     "colSubmissions": "Submissions",
-    "colJoined": "Joined"
+    "colJoined": "Joined",
+    "globalRank": "Global Rank",
+    "recentSubmissions": "Recent Submissions"
   },
   "profile": {
     "joined": "Joined {date}",
@@ -274,7 +276,10 @@
     "rules": "Rules",
     "rulesPlaceholder": "Contest rules",
     "submit": "Create Contest",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "editTitle": "Edit Contest",
+    "save": "Save Changes",
+    "back": "Back to Contest"
   },
   "taskCreate": {
     "back": "Back to Tasks",

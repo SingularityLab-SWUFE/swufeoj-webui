@@ -296,11 +296,7 @@ const judgerTabs = computed(() => [
   { label: t('taskCreate.script'), value: 'script', icon: 'i-lucide-file-code' }
 ])
 
-const difficulties = computed(() => [
-  { label: t('status.difficulty.Easy'), value: 'easy' },
-  { label: t('status.difficulty.Medium'), value: 'medium' },
-  { label: t('status.difficulty.Hard'), value: 'hard' }
-])
+const { difficulties, addTestCase: addTC, removeTestCase: removeTC } = useTaskForm()
 
 const submissionFormats = computed(() => [
   { label: t('taskCreate.formatFile'), value: 'file' },
@@ -314,11 +310,11 @@ const metricDirections = computed(() => [
 ])
 
 const addTestCase = () => {
-  form.value.io.testCases.push({ input: '', output: '', isPublic: false })
+  addTC(form.value.io.testCases)
 }
 
 const removeTestCase = (index: number) => {
-  form.value.io.testCases.splice(index, 1)
+  removeTC(form.value.io.testCases, index)
 }
 
 const handleCreate = async () => {

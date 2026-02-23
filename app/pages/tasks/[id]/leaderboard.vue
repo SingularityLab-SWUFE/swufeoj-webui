@@ -17,71 +17,33 @@
       </div>
 
       <UCard>
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead>
-              <tr class="border-b">
-                <th class="text-left py-3 px-4">
-                  {{ $t('taskLeaderboard.rank') }}
-                </th>
-                <th class="text-left py-3 px-4">
-                  {{ $t('taskLeaderboard.user') }}
-                </th>
-                <th class="text-left py-3 px-4">
-                  {{ $t('taskLeaderboard.score') }}
-                </th>
-                <th class="text-left py-3 px-4">
-                  {{ $t('taskLeaderboard.time') }}
-                </th>
-                <th class="text-left py-3 px-4">
-                  {{ $t('taskLeaderboard.memory') }}
-                </th>
-                <th class="text-left py-3 px-4">
-                  {{ $t('taskLeaderboard.language') }}
-                </th>
-                <th class="text-left py-3 px-4">
-                  {{ $t('taskLeaderboard.submitted') }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="entry in leaderboard"
-                :key="entry.rank"
-                class="border-b hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
-                @click="navigateTo(`/users/${entry.userId}`)"
-              >
-                <td class="py-3 px-4">
-                  <UBadge
-                    v-if="entry.rank <= 3"
-                    :color="getRankColor(entry.rank)"
-                  >
-                    {{ entry.rank }}
-                  </UBadge>
-                  <span v-else>{{ entry.rank }}</span>
-                </td>
-                <td class="py-3 px-4 font-medium">
-                  {{ entry.username }}
-                </td>
-                <td class="py-3 px-4">
-                  {{ entry.score }}
-                </td>
-                <td class="py-3 px-4">
-                  {{ entry.time }} ms
-                </td>
-                <td class="py-3 px-4">
-                  {{ entry.memory }} MB
-                </td>
-                <td class="py-3 px-4">
-                  {{ entry.language }}
-                </td>
-                <td class="py-3 px-4 text-gray-600 dark:text-gray-400">
-                  {{ entry.submittedAt }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <UTable
+          :columns="columns"
+          :data="leaderboard"
+          @select="(_e, row) => navigateTo(`/users/${row.original.userId}`)"
+        >
+          <template #rank-cell="{ row }">
+            <UBadge
+              v-if="row.original.rank <= 3"
+              :color="getRankColor(row.original.rank)"
+            >
+              {{ row.original.rank }}
+            </UBadge>
+            <span v-else>{{ row.original.rank }}</span>
+          </template>
+
+          <template #time-cell="{ row }">
+            {{ row.original.time }} ms
+          </template>
+
+          <template #memory-cell="{ row }">
+            {{ row.original.memory }} MB
+          </template>
+
+          <template #submittedAt-cell="{ row }">
+            <span class="text-muted">{{ row.original.submittedAt }}</span>
+          </template>
+        </UTable>
 
         <div class="flex justify-center mt-4">
           <UPagination
@@ -96,6 +58,7 @@
 </template>
 
 <script setup lang="ts">
+const { t } = useI18n()
 const route = useRoute()
 const taskId = route.params.id
 
@@ -106,6 +69,16 @@ const totalItems = ref(50)
 const task = ref({
   title: 'Two Sum'
 })
+
+const columns = computed(() => [
+  { accessorKey: 'rank', header: t('taskLeaderboard.rank') },
+  { accessorKey: 'username', header: t('taskLeaderboard.user') },
+  { accessorKey: 'score', header: t('taskLeaderboard.score') },
+  { accessorKey: 'time', header: t('taskLeaderboard.time') },
+  { accessorKey: 'memory', header: t('taskLeaderboard.memory') },
+  { accessorKey: 'language', header: t('taskLeaderboard.language') },
+  { accessorKey: 'submittedAt', header: t('taskLeaderboard.submitted') }
+])
 
 const leaderboard = ref([
   { rank: 1, userId: 1, username: 'alice', score: 100, time: 12, memory: 3.2, language: 'C++', submittedAt: '2 hours ago' },

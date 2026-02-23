@@ -12,7 +12,7 @@
             <UserHeader
               :username="user.username"
               :avatar="user.avatar"
-              :subtitle="`Joined ${user.joinDate}`"
+              :subtitle="$t('profile.joined', { date: user.joinDate })"
               size="xl"
             />
           </div>
@@ -24,7 +24,7 @@
                   {{ user.solved }}
                 </div>
                 <div class="text-sm text-gray-600 dark:text-gray-400">
-                  Tasks Solved
+                  {{ $t('profile.solved') }}
                 </div>
               </div>
             </UCard>
@@ -34,7 +34,7 @@
                   {{ user.submissions }}
                 </div>
                 <div class="text-sm text-gray-600 dark:text-gray-400">
-                  Submissions
+                  {{ $t('profile.totalSubmissions') }}
                 </div>
               </div>
             </UCard>
@@ -44,7 +44,7 @@
                   {{ user.rank }}
                 </div>
                 <div class="text-sm text-gray-600 dark:text-gray-400">
-                  Global Rank
+                  {{ $t('users.globalRank') }}
                 </div>
               </div>
             </UCard>
@@ -52,7 +52,7 @@
 
           <div>
             <h2 class="text-xl font-bold mb-4">
-              Recent Submissions
+              {{ $t('users.recentSubmissions') }}
             </h2>
             <UTable
               :columns="submissionColumns"
@@ -78,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+const { t } = useI18n()
 const route = useRoute()
 const userId = route.params.id
 
@@ -96,19 +97,19 @@ const user = ref({
   ]
 })
 
-const submissionColumns = [{
+const submissionColumns = computed(() => [{
   accessorKey: 'task',
-  header: 'Task'
+  header: t('profile.colTask')
 }, {
   accessorKey: 'status',
-  header: 'Status'
+  header: t('profile.colStatus')
 }, {
   accessorKey: 'language',
-  header: 'Language'
+  header: t('profile.colLanguage')
 }, {
   accessorKey: 'time',
-  header: 'Time'
-}]
+  header: t('profile.colTime')
+}])
 
 onMounted(async () => {
   await new Promise(resolve => setTimeout(resolve, 500))

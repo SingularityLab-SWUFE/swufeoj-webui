@@ -69,11 +69,11 @@ const totalItems = ref(100)
 
 const statusOptions = computed(() => [
   { value: '', label: t('submissions.allStatus') },
-  { value: 'accepted', label: 'Accepted' },
-  { value: 'wrong_answer', label: 'Wrong Answer' },
-  { value: 'tle', label: 'TLE' },
-  { value: 'mle', label: 'MLE' },
-  { value: 're', label: 'RE' }
+  { value: 'accepted', label: t('status.submission.Accepted') },
+  { value: 'wrong_answer', label: t('status.submission.Wrong Answer') },
+  { value: 'tle', label: t('status.submission.Time Limit Exceeded') },
+  { value: 'mle', label: t('status.submission.Memory Limit Exceeded') },
+  { value: 're', label: t('status.submission.Runtime Error') }
 ])
 
 const languageOptions = computed(() => [
