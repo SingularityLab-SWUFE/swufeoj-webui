@@ -30,8 +30,6 @@ jobs:
       - run: pnpm install
 
       - run: pnpm nuxt generate
-        env:
-          NUXT_APP_BASE_URL: /swufeoj-webui/
 
       - uses: actions/upload-pages-artifact@v3
         with:
