@@ -2,6 +2,8 @@
 
 A general-purpose judging platform with pluggable judger, built for contests, benchmarking, and custom metric leaderboards.
 
+This project is under prototype design.
+
 ## Features
 
 ### Pluggable Judger System
